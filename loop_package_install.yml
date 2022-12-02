@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  tasks:
+   - yum:
+      name: "{{item}}"
+      state: installed
+     with_items:
+      - ftp
+      - httpd
+      - vsftpd
+      - nfs-utils
+...
