@@ -1,0 +1,23 @@
+---
+- hosts : dbserver
+  become: true
+  vars:
+   new: AKASH YADAV
+  tasks: 
+   - name: Install httpd server
+     yum: 
+      name: httpd
+      state: latest
+   - name: copy the index.html file
+     template:
+      src: index.html
+      dest: /var/www/html/index.html
+     notify:
+       - restarted the httpd server
+  handlers:
+   - name: start the httpd server
+     service:
+       name: httpd 
+       enabled: yes 
+       state: restarted
+...

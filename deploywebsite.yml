@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: true
+  tasks:
+   - yum :
+      name: httpd
+      state: latest
+   - copy:
+       src: /home/ansible/sourcecode/
+       dest: /var/www/html/
+   - lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: '^Listen'
+      insertafter: '^#Listen'
+      line: 'Listen 8080'
+   - firewalld:
+      port: 8080/tcp
+      permanent: true
+      state: enabled
+      immediate: true
+   - service:
+      name: httpd
+      state: started
+...

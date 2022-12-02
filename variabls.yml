@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  vars:
+   mydir: /tmp/aksh 
+   myfile: /etc/passwd
+   mypkg:
+    - httpd
+    - nfs-utils
+    - tree
+    - samba
+
+  tasks:
+   - name: creating a directory
+     file:
+      path: "{{mydir}}"
+      state: directory
+   - name: copy file
+     copy:
+      src: "{{myfile}}"
+      dest: "{{mydir}}"
+   - name : installing package
+     yum:
+      name: "{{mypkg}}"
+      service: latest
+       
+...

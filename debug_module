@@ -1,0 +1,7 @@
+---
+- hosts: dbserver
+  tasks:
+   -  name: Display the message
+      debug:
+      var: new 
+...

@@ -1,0 +1,11 @@
+---
+- name: importing tasks
+  hosts: all
+  become: true
+  tasks:
+  - import_tasks: /home/ansible/ansibleplaybook/creating_file.yml
+  - import_tasks: /home/ansible/ansibleplaybook/copy_file.yml
+  - import_tasks: /home/ansible/ansibleplaybook/ping_server.yml
+  - import_tasks: /home/ansible/ansibleplaybook/ping_server.yml
+...
+

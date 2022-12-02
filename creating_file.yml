@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true 
+  tasks:
+   - name: create a file 
+     file:
+      path: /tmp/akashyadav.yml
+      state: touch  
+      owner: root  
+      group: mygroup 
+      mode: '0777'  
+...

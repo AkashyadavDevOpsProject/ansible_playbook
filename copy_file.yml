@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: copy file and changing the permission
+    copy:
+     src: /etc/passwd
+     dest: /tmp/
+     owner: akash 
+     group: tcs
+     mode: 777
+...
+

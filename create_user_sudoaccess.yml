@@ -1,0 +1,38 @@
+---
+- hosts: all
+  become: true
+  tasks:
+   - name: adding the users
+     ansible.builtin.user:
+      name: vijay
+      password: "{{ 'root' |password_hash('sha512','mysecretsalt') }}"
+      groups:
+        - tcs
+        - wipro
+      state: "present"
+      shell: "/bin/bash"
+      system: false
+      create_home: true
+      home: "/home/abhi/"
+      comment: "ansible example"
+      generate_ssh_key: true  
+   - name: Setup Sudo Access for abhi User
+     copy:
+      dest: /etc/sudoers.d/ansible
+      content: 'vijay ALL=(ALL) NOPASSWD: ALL' 
+      validate: /usr/sbin/visudo -cf %s
+   - name: Disable Password Authentication
+     lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: '^#?\s*PasswordAuthentication\s'
+      line: 'PasswordAuthentication no'
+      state: present
+      backup: yes
+     notify:
+       - restart ssh
+  handlers:
+   -  name: restart ssh
+      service:
+         name: sshd
+         state: restarted
+...

@@ -1,0 +1,31 @@
+---
+- hosts : dbserver
+  become: true
+  vars:
+   new: AKASH YADAV
+  tasks: 
+   - name: Install httpd server
+     yum: 
+      name: httpd
+      state: latest
+   - name: start the httpd server
+     service:
+       name: httpd 
+       enabled: yes 
+       state: started
+   - name: copy the index.html file
+     template:
+      src: index.html
+      dest: /var/www/html/index.html
+- hosts : old
+  become: true
+  tasks:
+   - name: Install apache2 in ubuntu server
+     apt: name=apache2
+   - name : start the apache2 service
+     service: name=apache2 enabled=yes state=started
+   - name: copy the index file 
+     template:
+      src: index.html
+      dest: /var/www/html/index.html
+...

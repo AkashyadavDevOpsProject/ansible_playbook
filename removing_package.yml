@@ -1,0 +1,12 @@
+---
+- hosts : dbserver
+  become: true
+  tasks:
+  - name: uninstalling httpd package
+    yum: name=httpd state=absent
+- hosts : old 
+  become: true
+  tasks:
+  - name: uninstalling in ubuntu server
+    apt: name=apache2 state=absent
+...
